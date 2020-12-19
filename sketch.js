@@ -5,16 +5,14 @@ const Body = Matter.Body;
 const Constraint = Matter.Constraint;
 
 
-var a, sound, polygon, backgroundImg;
+var a, sound, polygon;
 var circles=[];
-var score = 0;
+
 
 function preload() {
 
-  //getTime();
-
 polygon_img = loadImage("polygon.png");
-//sound = loadSound("Sound.mp3");
+sound = loadSound("Sound.mp3");
 }
 
 
@@ -27,7 +25,7 @@ polygon_img = loadImage("polygon.png");
 function setup() {
   createCanvas(800,800);
   stroke(255)
- 
+
 
 
 
@@ -65,15 +63,15 @@ function setup() {
 var options = {
 
   density:1,
- 
+
 }
-  polygon = Bodies.circle(100,500,20,options);
+  polygon = Bodies.circle(50,500,20,options);
   World.add(world, polygon);
 
   slingshot = new SlingShot(this.polygon,{x:100,y:500});
 
-   
-//console.log(polygon);
+
+console.log(polygon);
 
   Engine.run(engine);
 }
@@ -81,15 +79,17 @@ var options = {
 
 
 function draw() {
-//if (backgroundImg)
-   background("black");  
-  
- 
+    background(0);  
+
+  // sound effect boom
+  if(!sound.isPlaying() && polygon.position.x > 420 && polygon.position.x < 660 && polygon.position.y < 650 && polygon.position.y > 485) {
+    sound.play();
+    sound.setVolume(0.05);
+  }
 
 
-// to display Score
-textSize(20);
-text("Score : "+score,680,40);
+
+
 
  stand.display();
  block1.display();
@@ -113,31 +113,13 @@ text("Score : "+score,680,40);
  block16.display();
  slingshot.display();
 
- block1.score();
- block2.score();
- block3.score();
- block4.score();
- block5.score();
- block6.score();
- block7.score();
- 
- block8.score();
- block9.score();
- block10.score();
- block11.score();
- block12.score();
-
- block13.score();
- block14.score();
- block15.score();
-
  // polygon image
  imageMode(CENTER);
  image(polygon_img,polygon.position.x,polygon.position.y,40,40);
 
  //console.log(polygon.position.x);
 
- 
+
 
  drawSprites();
 }
@@ -149,37 +131,14 @@ function mouseDragged() {
 
 function mouseReleased() {
   slingshot.fly();
-  
+
 
 }
 
 function keyPressed() {
   if(keyCode === 32) {
-    Matter.Body.setPosition(this.polygon,{x:100, y:500});
     slingshot.attach(this.polygon);
-   
 
   }
 
-}
-
-
-//async function getTime() {
- // var response = await fetch("http://worldtimeapi.org/api/timezone/America/Los_Angeles");
-  //var responseJSON = await response.json();
-  
- // var datetime = responseJSON.datetime;
-  //var hour = datetime.slice(11,13);
-  //console.log(hour);
-
-  //if(hour >= 6 && hour <= 18) {
-  //  bg = "Day.jpg"
-  //} else {
- //   bg = "Night.jpg"
- // }
-
-//backgroundImg = loadImage(bg);
-////console.log(backgroundImg);
-
-
-//}
+} 
