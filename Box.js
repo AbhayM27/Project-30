@@ -11,21 +11,24 @@ class Box {
     this.visiblity = 255;
     World.add(world, this.body);
   }
-  display(){
-    //var angle = this.body.angle;
+display(){
     if(this.body.speed < 3) {
     var pos = this.body.position;
+      var angle = this.body.angle;
     push();
+      translate(pos.x,pos.y);
+      rotate(angle);
+       rectMode(CENTER);
     rect(pos.x,pos.y,this.width,this.height);
-    rectMode(CENTER);
-    //rotate(angle);
     pop();
     } else {
       World.remove(world, this.body);
       push();
-      this.visiblity = this.visiblity;
+      this.visiblity = this.visiblity-5;
       tint(255,this.visiblity);
       pop();
     }
   }
-} 
+
+}
+
